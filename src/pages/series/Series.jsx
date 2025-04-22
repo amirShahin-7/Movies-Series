@@ -1,5 +1,11 @@
-const Series = () => {
-  return <div></div>;
-};
+import React from 'react'
 
-export default Series;
+
+
+const Series = () => {
+  return (
+    <div></div>
+  )
+}
+
+export default Series

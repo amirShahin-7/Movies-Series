@@ -1,5 +1,11 @@
+import MoviesCards from "./component/MoviesCards";
+
 const Movies = () => {
-  return <div></div>;
+  return (
+    <div>
+      <MoviesCards/>
+    </div>
+  );
 };
 
 export default Movies;
