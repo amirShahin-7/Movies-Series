@@ -35,15 +35,40 @@ const MoviesOnDesktop = () => {
   };
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#EDE8F5] via-[#ADBBDA] to-[#8697C4] px-4 py-8 text-[#3D52A0]">
+
       <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight">
-        🎨 Cinema Gallery
+        🎞️ Featured Movies
       </h2>
 
-      {/* Desktop grid */}
+      {/* Desktop Grid */}
       <div className="hidden md:flex flex-wrap justify-center gap-8">
         {movies.map((movie, i) => (
-          <div key={i} className="w-[220px] bg-white/30 backdrop-blur-xl border border-[#ADBBDA]/40 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer">
-            <img src={baseUrl + movie.poster_path} alt={movie.title} className="w-full h-auto object-contain rounded-t-2xl" />
+          <div
+            key={i}
+            className="w-[220px] bg-white/30 backdrop-blur-xl border border-[#ADBBDA]/40 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
+          >
+            <div className="relative">
+              <img
+                src={baseUrl + movie.poster_path}
+                alt={movie.title}
+                className="w-full h-52 object-cover rounded-t-2xl"
+              />
+              <div className="absolute top-2 right-2 bg-gradient-to-r from-[#7091E6] to-[#3D52A0] text-white px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 shadow">
+                <FaStar /> {movie.vote_average.toFixed(1)}
+              </div>
+            </div>
+            <div className="p-3 flex flex-col h-[180px]">
+              <h3 className="text-sm font-bold truncate mb-1">{movie.title}</h3>
+              <p className="text-[10px] text-[#8697C4] italic mb-1 truncate">
+                {getGenres(movie.genre_ids)}
+              </p>
+              <p className="text-[11px] text-[#3D52A0]/80 mb-2 line-clamp-3">
+                {movie.overview}
+              </p>
+              <p className="text-[10px] text-[#7091E6] flex items-center mt-auto">
+                <FaCalendarAlt className="mr-1" /> {movie.release_date}
+              </p>
+            </div>
           </div>
         ))}
       </div>
