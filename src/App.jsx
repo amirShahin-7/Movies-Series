@@ -7,7 +7,7 @@ import ContactUs from "./pages/contactUs/ContactUs";
 
 const App = () => {
   return (
-    <div>
+    <div className="h-screen bg-gradient-to-br from-[#EDE8F5] via-[#ADBBDA] to-[#8697C4]">
       <Header />
       <Routes>
         <Route index element={<Home />} />
