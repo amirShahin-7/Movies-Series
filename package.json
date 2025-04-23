@@ -38,6 +38,7 @@
     "react-show-more-text": "^1.7.1",
     "react-slick": "^0.30.3",
     "react-stars": "^2.2.5",
-    "sweetalert2": "^11.19.1"
+    "sweetalert2": "^11.19.1",
+    "swiper": "^11.2.6"
   }
 }
