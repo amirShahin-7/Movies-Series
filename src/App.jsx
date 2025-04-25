@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Movies from "./pages/movies/Movies";
 import Series from "./pages/series/Series";
 import ContactUs from "./pages/contactUs/ContactUs";
+import SeriesDetails from "./pages/series/SeriesDetails";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/movies" element={<Movies />} />
         <Route path="/series" element={<Series />} />
         <Route path="/contactUs" element={<ContactUs />} />
+        <Route path="/series/:id" element={<SeriesDetails />} />
       </Routes>
     </div>
   );
