@@ -15,11 +15,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (
-        isSidebarOpen &&
-        !e.target.closest(".sidebar") &&
-        !e.target.closest(".toggle-button")
-      ) {
+      if (isSidebarOpen && !e.target.closest(".sidebar") && !e.target.closest(".toggle-button")) {
         setSidebarOpen(false);
       }
     };
@@ -33,9 +29,7 @@ const Header = () => {
     <header className="relative z-50 bg-[#EDE8F5] text-[#3D52A0] p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-md rounded-b-xl font-['Poppins']">
       {/* Logo & Menu Toggle */}
       <div className="flex items-center justify-between w-full lg:w-auto">
-        <h1 className="text-3xl font-bold tracking-wide text-[#3D52A0]">
-          🎬 MovieShow
-        </h1>
+        <h1 className="text-3xl font-bold tracking-wide text-[#3D52A0]">🎬 MovieShow</h1>
         <button
           onClick={() => setSidebarOpen(!isSidebarOpen)}
           className="toggle-button lg:hidden text-[#3D52A0] focus:outline-none"
@@ -69,7 +63,7 @@ const Header = () => {
                       onClick={() => setSidebarOpen(false)}
                       className="block py-2 px-3 rounded-md hover:bg-[#EDE8F5] hover:text-[#7091E6] transition"
                     >
-                      {path === "/" ? "Home" : path.slice(1)}
+                      {path === '/' ? 'Home' : path.slice(1)}
                     </Link>
                   </li>
                 ))}
@@ -87,7 +81,7 @@ const Header = () => {
             to={path}
             className="px-4 py-2 rounded-md hover:bg-[#EDE8F5] hover:text-[#7091E6] transition"
           >
-            {path === "/" ? "Home" : path.slice(1)}
+            {path === '/' ? 'Home' : path.slice(1)}
           </Link>
         ))}
       </nav>
@@ -99,7 +93,7 @@ const Header = () => {
             onClick={() => dispatch(toggleType())}
             className="px-4 py-2 rounded-full font-semibold text-sm bg-[#7091E6] text-white hover:bg-[#3D52A0] transition"
           >
-            {ifMovies ? "Search Movies" : "Search Series"}
+            {ifMovies ? 'Search Movies' : 'Search Series'}
           </button>
 
           <div className="relative flex-1">
@@ -107,7 +101,7 @@ const Header = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder={`Search ${ifMovies ? "Movies" : "Series"}...`}
+              placeholder={`Search ${ifMovies ? 'Movies' : 'Series'}...`}
               className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-[#8697C4] bg-[#EDE8F5] text-[#3D52A0] placeholder-[#8697C4] focus:outline-none focus:border-[#7091E6] shadow-inner"
             />
             <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#8697C4]" />

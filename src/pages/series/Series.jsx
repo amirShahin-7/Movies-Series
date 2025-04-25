@@ -182,4 +182,4 @@ const Series = () => {
   );
 };
 
-export default Series;
+export default Series
