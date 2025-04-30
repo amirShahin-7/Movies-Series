@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@material-tailwind/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOneMovieDetails } from '../../redux/slices/moviesSlices/moviesSlice';
+import { getCastData, getOneMovieDetails } from '../../redux/slices/moviesSlices/moviesSlice';
 import { motion } from 'framer-motion';
 import { FaHeart, FaStar, FaPlay } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
@@ -25,7 +25,7 @@ const palette = {
 const MovieDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { oneMovieDetails, loading } = useSelector((state) => state.movies);
+  const { oneMovieDetails, oneMovieDetailsLoading,castData } = useSelector((state) => state.movies);
 
   // Local loader state for 2 seconds on mount
   const [showLoader, setShowLoader] = useState(true);
@@ -35,10 +35,11 @@ const MovieDetails = () => {
   }, []);
 
   useEffect(() => {
+    dispatch(getCastData())
     dispatch(getOneMovieDetails(id));
   }, [dispatch, id]);
 
-  if (showLoader || loading) {
+  if (showLoader || oneMovieDetailsLoading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-[#EDE8F5] via-[#ADBBDA] to-[#8697C4]">
         <div className="w-64 h-64">
@@ -150,7 +151,10 @@ const MovieDetails = () => {
               </div>
 
               <Typography variant="small" className="text-gray-700">
-                <strong>Casting:</strong> {cast.slice(0, 5).map(c => c.name).join(', ') || '—'}
+                <strong>Casting:</strong> {castData.cast.slice(0,4).map((cast,i)=>{
+                  return cast.name +","
+
+                })}
               </Typography>
             </div>
 
