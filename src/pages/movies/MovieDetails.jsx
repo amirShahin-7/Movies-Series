@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -7,10 +7,12 @@ import {
   Typography,
 } from '@material-tailwind/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOneMovieDetails } from '../../redux/slices/moviesSlices/moviesSlice';
+import { getCastData, getOneMovieDetails } from '../../redux/slices/moviesSlices/moviesSlice';
 import { motion } from 'framer-motion';
 import { FaHeart, FaStar, FaPlay } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
+import Lottie from 'lottie-react';
+import ironmanAnimation from '../../assets/ironman.json';
 
 const palette = {
   primary: '#3D52A0',
@@ -21,33 +23,31 @@ const palette = {
 };
 
 const MovieDetails = () => {
-    const {id} = useParams()
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const { oneMovieDetails, loading } = useSelector((state) => state.movies);
+  const { oneMovieDetails, oneMovieDetailsLoading,castData } = useSelector((state) => state.movies);
+
+  // Local loader state for 2 seconds on mount
+  const [showLoader, setShowLoader] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => setShowLoader(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
+    dispatch(getCastData())
     dispatch(getOneMovieDetails(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
-  if (loading || !oneMovieDetails) {
+  if (showLoader || oneMovieDetailsLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[${palette.background}] to-[${palette.tertiary}] p-4 md:p-8">
-        <div className="animate-pulse space-y-6">
-          <div className="h-64 bg-gray-300 rounded-lg" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="h-80 bg-gray-300 rounded-lg w-full" />
-            <div className="md:col-span-2 space-y-4">
-              <div className="h-6 bg-gray-300 rounded w-3/4" />
-              <div className="h-4 bg-gray-300 rounded w-full" />
-              <div className="h-4 bg-gray-300 rounded w-full" />
-              <div className="h-4 bg-gray-300 rounded w-5/6" />
-              <div className="flex flex-wrap gap-2">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="h-8 bg-gray-300 rounded-full w-20" />
-                ))}
-              </div>
-            </div>
-          </div>
+      <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-[#EDE8F5] via-[#ADBBDA] to-[#8697C4]">
+        <div className="w-64 h-64">
+          <Lottie
+            animationData={ironmanAnimation}
+            loop
+            autoplay
+          />
         </div>
       </div>
     );
@@ -151,7 +151,10 @@ const MovieDetails = () => {
               </div>
 
               <Typography variant="small" className="text-gray-700">
-                <strong>Casting:</strong> {cast.slice(0, 5).map(c => c.name).join(', ') || '—'}
+                <strong>Casting:</strong> {castData.cast.slice(0,4).map((cast,i)=>{
+                  return cast.name +","
+
+                })}
               </Typography>
             </div>
 
@@ -176,15 +179,13 @@ const MovieDetails = () => {
                 <FaPlay /> Play Trailer
               </Button>
               <Link to={-1}>
-              <Button
-                variant="outlined"
-                className="border-[#3D52A0] text-[#3D52A0] py-3 w-full uppercase tracking-wide hover:bg-[#3D52A0]/10"
-                
-              >
-                Back
-              </Button>
+                <Button
+                  variant="outlined"
+                  className="border-[#3D52A0] text-[#3D52A0] py-3 w-full uppercase tracking-wide hover:bg-[#3D52A0]/10"
+                >
+                  Back
+                </Button>
               </Link>
-              
             </div>
           </div>
         </CardBody>
