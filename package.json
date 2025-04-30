@@ -40,8 +40,10 @@
     "react-scroll": "^1.9.3",
     "react-show-more-text": "^1.7.1",
     "react-slick": "^0.30.3",
+    "react-spinners": "^0.17.0",
     "react-stars": "^2.2.5",
-    "sweetalert2": "^11.19.1",
+    "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.6.13",
     "swiper": "^11.2.6"
   }
 }
