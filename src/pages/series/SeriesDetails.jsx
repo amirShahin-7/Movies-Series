@@ -11,7 +11,6 @@ import {
   Typography,
   Dialog,
   DialogBody,
-  Spinner,
 } from "@material-tailwind/react";
 import { motion } from "framer-motion";
 import { FaHeart, FaStar, FaPlay } from "react-icons/fa";
@@ -39,10 +38,10 @@ const SeriesDetails = () => {
 
   if (loading || !details) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-[#3D52A0] text-white">
-        <p>
-          Loading...
-          <Spinner className="h-12 w-12 text-[#3D52A0]" />
+      <div className="flex flex-col items-center justify-center h-[60vh] gap-4 text-[#3D52A0]">
+        <div className="w-12 h-12 border-4 border-[#566ec4] border-t-transparent rounded-full animate-spin"></div>
+        <p className="font-medium text-lg animate-pulse">
+          Loading, please wait...
         </p>
       </div>
     );
