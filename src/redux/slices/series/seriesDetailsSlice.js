@@ -1,9 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-const API_HEADERS = {
-  accept: "application/json",
-  Authorization:
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTRiN2JlZDYwYjY4Mzg0MTZiN2YyMWRmOGYxZGQ0YiIsIm5iZiI6MTc0NTEyMDY2Mi42ODgsInN1YiI6IjY4MDQ2ZDk2NmUxYTc2OWU4MWVlMDJmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FowWTNxrhrDxwepk18gahAlGo_ocNTg5vwOfyMQ-BlY",
-};
+
 // Fetch Series Details
 export const fetchSeriesDetails = createAsyncThunk(
   "details/fetchSeriesDetails",
@@ -11,7 +7,13 @@ export const fetchSeriesDetails = createAsyncThunk(
     try {
       const res = await fetch(
         `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
-        { headers: API_HEADERS }
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTRiN2JlZDYwYjY4Mzg0MTZiN2YyMWRmOGYxZGQ0YiIsIm5iZiI6MTc0NTEyMDY2Mi42ODgsInN1YiI6IjY4MDQ2ZDk2NmUxYTc2OWU4MWVlMDJmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FowWTNxrhrDxwepk18gahAlGo_ocNTg5vwOfyMQ-BlY",
+          },
+        }
       );
       return await res.json();
     } catch (err) {
@@ -27,7 +29,13 @@ export const fetchSeriesCredits = createAsyncThunk(
     try {
       const res = await fetch(
         `https://api.themoviedb.org/3/tv/${id}/credits?language=en-US`,
-        { headers: API_HEADERS }
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTRiN2JlZDYwYjY4Mzg0MTZiN2YyMWRmOGYxZGQ0YiIsIm5iZiI6MTc0NTEyMDY2Mi42ODgsInN1YiI6IjY4MDQ2ZDk2NmUxYTc2OWU4MWVlMDJmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FowWTNxrhrDxwepk18gahAlGo_ocNTg5vwOfyMQ-BlY",
+          },
+        }
       );
       return await res.json();
     } catch (err) {
@@ -43,22 +51,13 @@ export const fetchSeriesVideos = createAsyncThunk(
     try {
       const res = await fetch(
         `https://api.themoviedb.org/3/tv/${id}/videos?language=en-US`,
-        { headers: API_HEADERS }
-      );
-      return await res.json();
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  }
-);
-
-export const fetchExternalIds = createAsyncThunk(
-  "details/fetchExternalIds",
-  async (id, { rejectWithValue }) => {
-    try {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}/external_ids`,
-        { headers: API_HEADERS }
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTRiN2JlZDYwYjY4Mzg0MTZiN2YyMWRmOGYxZGQ0YiIsIm5iZiI6MTc0NTEyMDY2Mi42ODgsInN1YiI6IjY4MDQ2ZDk2NmUxYTc2OWU4MWVlMDJmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FowWTNxrhrDxwepk18gahAlGo_ocNTg5vwOfyMQ-BlY",
+          },
+        }
       );
       return await res.json();
     } catch (err) {
@@ -73,7 +72,6 @@ const detailsSlice = createSlice({
     details: null,
     credits: null,
     videos: null,
-    externalIds: null,
     loading: false,
     error: null,
   },
@@ -103,12 +101,6 @@ const detailsSlice = createSlice({
       })
       .addCase(fetchSeriesVideos.rejected, (state) => {
         state.videos = null;
-      })
-      .addCase(fetchExternalIds.fulfilled, (state, action) => {
-        state.externalIds = action.payload;
-      })
-      .addCase(fetchExternalIds.rejected, (state) => {
-        state.externalIds = null;
       });
   },
 });
