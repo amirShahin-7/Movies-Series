@@ -95,9 +95,11 @@ const Series = () => {
       )}
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          Loading ...
-          <Spinner className="h-12 w-12 text-[#3D52A0]" />
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-4 text-[#3D52A0]">
+          <div className="w-12 h-12 border-4 border-[#566ec4] border-t-transparent rounded-full animate-spin"></div>
+          <p className="font-medium text-lg animate-pulse">
+            Loading, please wait...
+          </p>
         </div>
       ) : (
         <div className="hidden md:flex flex-wrap justify-center gap-8">
@@ -182,4 +184,4 @@ const Series = () => {
   );
 };
 
-export default Series
+export default Series;
