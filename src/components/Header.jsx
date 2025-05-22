@@ -13,16 +13,10 @@ import SearchBar from "./SearchBar";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { details, loading } = useSelector(
-    (state) => state.seriesDetailsReducer
-  );
+
   const { type, query, results } = useSelector((state) => state.headerReducer);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const ifSeries = type === "series";
-
-  useEffect(() => {
-    if (!loading && !details) navigate("*");
-  }, [loading, details]);
 
   useEffect(() => {
     if (query.trim()) {

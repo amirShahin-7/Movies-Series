@@ -14,17 +14,12 @@ const SearchBar = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { query, results } = useSelector((state) => state.headerReducer);
-    const { details, loading } = useSelector(
-      (state) => state.seriesDetailsReducer
-    );
+
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
   const defaultImage =
     "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg";
-  useEffect(() => {
-    if (!loading && !details) navigate("*");
-  }, [loading, details]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
