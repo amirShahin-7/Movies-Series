@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchSeriesVideos,
   fetchSeriesDetails,
   fetchSeriesCredits,
-  fetchSeriesVideos,
-} from "../../redux/slices/series/seriesDetailsSlice";
+} from "./../../../redux/slices/series/seriesDetailsSlice";
 import {
   Button,
   Typography,
@@ -15,7 +15,7 @@ import {
 import { motion } from "framer-motion";
 import { FaHeart, FaStar, FaPlay } from "react-icons/fa";
 
-const SeriesDetails = () => {
+const TopSection = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -67,12 +67,12 @@ const SeriesDetails = () => {
   return (
     <motion.div
       dir="ltr"
-      className="min-h-screen bg-gradient-to-br from-[#EDE8F5] via-[#ADBBDA] to-[#8697C4] py-8 px-4 md:px-12 lg:px-20"
+      className="min-h-screen py-8 px-4 md:px-12 lg:px-20 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="relative bg-white shadow-2xl rounded-3xl overflow-hidden">
+      <div className="relative shadow-2xl rounded-3xl overflow-hidden">
         <div className="relative h-72 sm:h-80 md:h-96 overflow-hidden">
           <motion.img
             src={
@@ -105,7 +105,7 @@ const SeriesDetails = () => {
               src={
                 poster_path
                   ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                  : "https://st4.depositphotos.com/14953852/22772/v/450/depositphotos_227725120-stock-illustration-image-available-icon-flat-vector.jpg"
+                  : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"
               }
               alt={title}
               className="w-48 sm:w-56 md:w-full max-w-xs rounded-2xl shadow-xl border-4 border-white"
@@ -130,9 +130,9 @@ const SeriesDetails = () => {
                   <span className="font-medium">Status:</span> {status}
                 </div>
                 <div className="flex flex-wrap gap-4">
-                  <span className="font-medium">Origin:</span>{" "}
+                  <span className="font-medium">Origin:</span>
                   {origin_country.join(", ")}
-                  <span className="font-medium">Languages:</span>{" "}
+                  <span className="font-medium">Languages:</span>
                   {spoken_languages.map((l) => l.english_name).join(", ")}
                 </div>
               </div>
@@ -178,7 +178,7 @@ const SeriesDetails = () => {
               >
                 <FaPlay /> Trailer
               </Button>
-              <Link to={-1}>
+              <Link to={`/series`}>
                 <Button
                   variant="outlined"
                   className="border-[#3D52A0] text-[#3D52A0] py-3 w-full uppercase tracking-wide hover:bg-[#3D52A0]/10"
@@ -219,4 +219,4 @@ const SeriesDetails = () => {
   );
 };
 
-export default SeriesDetails;
+export default TopSection;
