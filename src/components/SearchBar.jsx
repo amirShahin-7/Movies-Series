@@ -36,7 +36,7 @@ const SearchBar = ({
   }, [dispatch]);
 
   const handleNavigation = (item) => {
-    navigate(`/${ifSeries ? "series" : "movies"}/${item.id}`);
+    navigate(`/${ifSeries ? "series" : "movie"}/${item.id}`);
     setTimeout(() => {
       dispatch(clearResults());
       setSelectedIndex(-1);

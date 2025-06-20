@@ -12,12 +12,19 @@ import { seasonEpisodesReducer } from "./slices/series/seasonEpisodes/seasonEpis
 import { seriesReviewsReducer } from "./slices/series/Social/SocialReviewsSlice";
 import { mediaReducer } from "./slices/series/mediaSlice/mediaSlice";
 import { recommendationsReducers } from "./slices/series/recommendation/recommendationsSlice";
+import { movieDetails } from "./slices/moviesSlices/movieDetailsSlice";
+import { keywordsMovies } from "./slices/moviesSlices/keywords/keywordsSlice";
+import { movieReviews } from "./slices/moviesSlices/Social/SocialReviewsSlice";
+import { mediaMovie } from "./slices/moviesSlices/mediaSlice/mediaSlice";
+import { recommendationsMovies } from "./slices/moviesSlices/recommendation/recommendationsSlice";
+import { collection } from "./slices/moviesSlices/collectionSlice/collection";
 export const store = configureStore({
   reducer: {
     headerReducer,
     seriesReducer,
     seriesDetailsReducer,
     movies,
+    movieDetails,
     topContent,
     castReducer,
     networkReducer,
@@ -27,6 +34,11 @@ export const store = configureStore({
     seriesReviewsReducer,
     mediaReducer,
     recommendationsReducers,
+    keywordsMovies,
+    movieReviews,
+    mediaMovie,
+    recommendationsMovies,
+    collection,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

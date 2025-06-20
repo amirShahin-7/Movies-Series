@@ -2,28 +2,28 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Typography, Card, CardBody } from "@material-tailwind/react";
-import { fetchImages } from "../../../../redux/slices/series/mediaSlice/mediaSlice";
-import { fetchSeriesDetails } from "../../../../redux/slices/series/seriesDetailsSlice";
+import { fetchImages } from "../../../../redux/slices/moviesSlices/mediaSlice/mediaSlice";
+import { moviesDetails } from "../../../../redux/slices/moviesSlices/movieDetailsSlice";
 
-const BackdropsPage = () => {
+const PostersPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { details } = useSelector((state) => state.seriesDetailsReducer);
-  const { backdrops, isLoading, error } = useSelector(
-    (state) => state.mediaReducer
+  const { details } = useSelector((state) => state.movieDetails);
+  const { posters, isLoading, error } = useSelector(
+    (state) => state.mediaMovie
   );
   const [filter, setFilter] = useState("en");
 
   useEffect(() => {
     dispatch(fetchImages(id));
-    dispatch(fetchSeriesDetails(id));
+    dispatch(moviesDetails(id));
   }, [id, dispatch]);
 
   if (isLoading) {
     return (
       <div className="flex justify-center py-8">
         <Typography variant="h6" className="text-[#3D52A0]">
-          Loading backdrops...
+          Loading posters...
         </Typography>
       </div>
     );
@@ -39,27 +39,72 @@ const BackdropsPage = () => {
     );
   }
 
-  const filteredBackdrops =
+  const filteredPosters =
     filter === "none"
-      ? backdrops.filter((b) => !b.iso_639_1)
-      : backdrops.filter((b) => b.iso_639_1 === filter);
+      ? posters.filter((p) => !p.iso_639_1)
+      : posters.filter((p) => p.iso_639_1 === filter);
 
   const options = [
     {
       type: "en",
       label: "English",
-      count: backdrops.filter((b) => b.iso_639_1 === "en").length,
+      count: posters.filter((p) => p.iso_639_1 === "en").length,
     },
     {
       type: "none",
       label: "No Language",
-      count: backdrops.filter((b) => !b.iso_639_1).length,
+      count: posters.filter((p) => !p.iso_639_1).length,
+    },
+    {
+      type: "bg",
+      label: "Bulgarian",
+      count: posters.filter((p) => p.iso_639_1 === "bg").length,
+    },
+    {
+      type: "zh",
+      label: "Chinese",
+      count: posters.filter((p) => p.iso_639_1 === "zh").length,
+    },
+    {
+      type: "co",
+      label: "Corsican",
+      count: posters.filter((p) => p.iso_639_1 === "co").length,
+    },
+    {
+      type: "fr",
+      label: "French",
+      count: posters.filter((p) => p.iso_639_1 === "fr").length,
+    },
+    {
+      type: "he",
+      label: "Hebrew",
+      count: posters.filter((p) => p.iso_639_1 === "he").length,
+    },
+    {
+      type: "hu",
+      label: "Hungarian",
+      count: posters.filter((p) => p.iso_639_1 === "hu").length,
+    },
+    {
+      type: "pt",
+      label: "Portuguese",
+      count: posters.filter((p) => p.iso_639_1 === "pt").length,
+    },
+    {
+      type: "ru",
+      label: "Russian",
+      count: posters.filter((p) => p.iso_639_1 === "ru").length,
+    },
+    {
+      type: "uk",
+      label: "Ukrainian",
+      count: posters.filter((p) => p.iso_639_1 === "uk").length,
     },
   ].filter((option) => option.count > 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#EDE8F5] via-[#ADBBDA] to-[#8697C4]">
-      <header className="p-4 max-w-[1350px] mx-auto">
+      <header className="p-4 max-w-[1200px] mx-auto">
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-4 bg-gradient-to-br from-[#EDE8F5]/80 via-[#ADBBDA]/80 to-[#8697C4]/80 rounded-lg p-4">
           <img
             src={
@@ -67,22 +112,22 @@ const BackdropsPage = () => {
                 ? `https://image.tmdb.org/t/p/w185${details?.poster_path}`
                 : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"
             }
-            alt={details?.name}
+            alt={details?.title}
             loading="lazy"
             className="w-28 h-auto rounded shadow"
           />
           <div className="flex flex-col items-center sm:items-start">
             <div className="text-2xl font-bold text-[#3D52A0]">
-              {details?.name || "--"}
+              {details?.title}
             </div>
-            <Link to={`/series/${id}`}>
+            <Link to={`/movie/${id}`}>
               <div className="text-[#7091E6] underline hover:text-[#3D52A0]">
                 ← Back to main
               </div>
             </Link>
             <div className="flex flex-col items-center sm:items-start gap-2 mt-2">
               <Typography variant="h4" className="text-[#3D52A0] font-bold">
-                Backdrops
+                Posters
               </Typography>
               <div className="flex flex-wrap justify-center gap-4">
                 {options.map((option) => (
@@ -103,32 +148,32 @@ const BackdropsPage = () => {
           </div>
         </div>
       </header>
-      <div className="max-w-[1300px] mx-auto bg-gradient-to-br from-[#EDE8F5]/80 via-[#ADBBDA]/80 to-[#8697C4]/80 rounded-lg p-4 shadow-md">
+      <div className="max-w-[1000px] mx-auto bg-gradient-to-br from-[#EDE8F5]/80 via-[#ADBBDA]/80 to-[#8697C4]/80 rounded-lg p-4 shadow-md">
         <main className="flex-1 p-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {filteredBackdrops.map((backdrop) => (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+            {filteredPosters.map((poster) => (
               <Card
-                key={backdrop.file_path}
-                className="w-full bg-[#ADBBDA] shadow-md"
+                key={poster.file_path}
+                className="w-full lg:w-[300px] bg-[#ADBBDA] shadow-md"
               >
                 <CardBody className="p-4">
                   <img
-                    src={`	https://media.themoviedb.org/t/p/w500_and_h282_face/${backdrop.file_path}`}
-                    alt="Backdrop"
-                    className="w-full lg:h-[300px] object-cover rounded-lg mb-2"
+                    src={`https://media.themoviedb.org/t/p/w220_and_h330_face${poster.file_path}`}
+                    alt="Poster"
+                    className="w-full lg:h-[400px] object-cover rounded-lg mb-2"
                   />
-                  <div className="flex flex-col gap-2 text-center">
+                  <div className="flex flex-col text-center gap-2">
                     <Typography
                       variant="small"
-                      className="font-bold text-[#7091E6]"
+                      className="text-[#7091E6] font-bold"
                     >
-                      Size: {backdrop.width}x{backdrop.height}
+                      Size: {poster.width}x{poster.height}
                     </Typography>
                     <Typography
                       variant="small"
-                      className="font-bold text-[#7091E6]"
+                      className="text-[#7091E6] font-bold"
                     >
-                      Language: {backdrop.iso_639_1 || "No Language"}
+                      Language: {poster.iso_639_1 || "No Language"}
                     </Typography>
                   </div>
                 </CardBody>
@@ -141,4 +186,4 @@ const BackdropsPage = () => {
   );
 };
 
-export default BackdropsPage;
+export default PostersPage;

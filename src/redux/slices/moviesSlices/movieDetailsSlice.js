@@ -4,13 +4,35 @@ const API_HEADERS = {
   Authorization:
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTRiN2JlZDYwYjY4Mzg0MTZiN2YyMWRmOGYxZGQ0YiIsIm5iZiI6MTc0NTEyMDY2Mi42ODgsInN1YiI6IjY4MDQ2ZDk2NmUxYTc2OWU4MWVlMDJmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FowWTNxrhrDxwepk18gahAlGo_ocNTg5vwOfyMQ-BlY",
 };
-// Fetch Series Details
-export const fetchSeriesDetails = createAsyncThunk(
-  "details/fetchSeriesDetails",
+// Fetch movie Details
+export const moviesDetails = createAsyncThunk(
+  "/details/moviesDetails",
+  async (id, { rejectWithValue }) => {
+    try {
+      const config = {
+        method: "get",
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxM2VmMWM1YTc3NjUzNzEyMzU3OTVhMzNjZDY2YWY4MCIsIm5iZiI6MTc0NTM2MDA5NS40Mywic3ViIjoiNjgwODE0ZGYxNWExZDVhNjE0YWE5OGM5Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.VWb6k0xb3Hgx6N5I3qEZZFCFs97i4C0IWzb1-9KC5Xg",
+        },
+      };
+      const req = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
+        config
+      );
+      const res = await req.json();
+      return res;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+export const fetchMovieCredits = createAsyncThunk(
+  "details/fetchMovieCredits",
   async (id, { rejectWithValue }) => {
     try {
       const res = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
+        `https://api.themoviedb.org/3/movie/${id}/credits`,
         { headers: API_HEADERS }
       );
       return await res.json();
@@ -20,29 +42,12 @@ export const fetchSeriesDetails = createAsyncThunk(
   }
 );
 
-// Fetch Credits
-export const fetchSeriesCredits = createAsyncThunk(
-  "details/fetchSeriesCredits",
-  async (id, { rejectWithValue }) => {
-    try {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}/credits?language=en-US`,
-        { headers: API_HEADERS }
-      );
-      return await res.json();
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  }
-);
-
-// Fetch Series Videos
-export const fetchSeriesVideos = createAsyncThunk(
+export const fetchMovieVideos = createAsyncThunk(
   "details/fetchSeriesVideos",
   async (id, { rejectWithValue }) => {
     try {
       const res = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}/videos?language=en-US`,
+        `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
         { headers: API_HEADERS }
       );
       return await res.json();
@@ -57,7 +62,7 @@ export const fetchExternalIds = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const res = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}/external_ids`,
+        `https://api.themoviedb.org/3/movie/${id}/external_ids`,
         { headers: API_HEADERS }
       );
       return await res.json();
@@ -68,40 +73,42 @@ export const fetchExternalIds = createAsyncThunk(
 );
 
 const detailsSlice = createSlice({
-  name: "seriesDetails",
+  name: "movieDetails",
   initialState: {
-    details: null,
-    credits: null,
+    cast: null,
+    crew: null,
     videos: null,
     externalIds: null,
-    loading: false,
+    details: [],
+    loading: true,
     error: "",
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchSeriesDetails.pending, (state) => {
+      .addCase(moviesDetails.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
-      .addCase(fetchSeriesDetails.fulfilled, (state, action) => {
+      .addCase(moviesDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.details = action.payload;
       })
-      .addCase(fetchSeriesDetails.rejected, (state, action) => {
+      .addCase(moviesDetails.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
       })
-      .addCase(fetchSeriesCredits.fulfilled, (state, action) => {
-        state.credits = action.payload;
+      .addCase(fetchMovieCredits.fulfilled, (state, action) => {
+        state.cast = action.payload.cast;
+        state.crew = action.payload.crew;
       })
-      .addCase(fetchSeriesCredits.rejected, (state) => {
-        state.credits = null;
+      .addCase(fetchMovieCredits.rejected, (state) => {
+        state.cast = null;
+        state.crew = null;
       })
-      .addCase(fetchSeriesVideos.fulfilled, (state, action) => {
+      .addCase(fetchMovieVideos.fulfilled, (state, action) => {
         state.videos = action.payload;
       })
-      .addCase(fetchSeriesVideos.rejected, (state) => {
+      .addCase(fetchMovieVideos.rejected, (state) => {
         state.videos = null;
       })
       .addCase(fetchExternalIds.fulfilled, (state, action) => {
@@ -113,4 +120,4 @@ const detailsSlice = createSlice({
   },
 });
 
-export const seriesDetailsReducer = detailsSlice.reducer;
+export const movieDetails = detailsSlice.reducer;

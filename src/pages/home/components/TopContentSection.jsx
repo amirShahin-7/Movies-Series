@@ -34,7 +34,7 @@ const TopContentSection = () => {
             className="w-[220px] bg-white/30 backdrop-blur-xl border border-[#ADBBDA]/40 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
             onClick={() => {
               dispatch(fetchTopContent());
-              navigate(`/movies/${item.id}`);
+              navigate(`/movie/${item.id}`);
             }}
           >
             <div className="relative">
