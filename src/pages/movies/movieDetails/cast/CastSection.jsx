@@ -2,38 +2,30 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
-import { fetchCast } from "./../../../../redux/slices/series/cast/castSlice";
-import { fetchSeriesKeywords } from "./../../../../redux/slices/series/keywords/keywordsSlice";
-import {
-  fetchSeriesDetails,
-  fetchExternalIds,
-} from "./../../../../redux/slices/series/seriesDetailsSlice";
+import { fetchMovieKeywords } from "../../../../redux/slices/moviesSlices/keywords/keywordsSlice";
 import Sidebar from "./../Sidebar";
 import MobileSidebar from "./../MobileSidebar";
 import { motion } from "framer-motion";
+import {
+  moviesDetails,
+  fetchExternalIds,
+  fetchMovieCredits,
+} from "./../../../../redux/slices/moviesSlices/movieDetailsSlice";
 
 const CastSection = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { cast, loading: castLoading } = useSelector(
-    (state) => state.castReducer
-  );
-  const { loading: detailsLoading } = useSelector(
-    (state) => state.seriesDetailsReducer
-  );
-  const { loading: keywordsLoading } = useSelector(
-    (state) => state.keywordsReducer
-  );
+  const { cast, loading } = useSelector((state) => state.movieDetails);
 
   useEffect(() => {
-    dispatch(fetchCast(id));
-    dispatch(fetchSeriesDetails(id));
+    dispatch(fetchMovieCredits(id));
+    dispatch(moviesDetails(id));
     dispatch(fetchExternalIds(id));
-    dispatch(fetchSeriesKeywords(id));
+    dispatch(fetchMovieKeywords(id));
   }, [id, dispatch]);
 
-  if (castLoading || detailsLoading || keywordsLoading) {
+  if (loading) {
     return (
       <div className="flex justify-center py-8">
         <Typography variant="h6" className="text-[#3D52A0]">
@@ -58,7 +50,7 @@ const CastSection = () => {
               variant="h3"
               className="text-2xl font-bold text-[#3D52A0]"
             >
-              Series Cast
+              Movie Cast
             </Typography>
           </div>
 
@@ -84,7 +76,7 @@ const CastSection = () => {
                         loading="lazy"
                       />
                     </div>
-                    <div className="mt-2 px-1">
+                    <div className="text-center mt-2 px-1">
                       <Typography
                         variant="h6"
                         className="font-semibold text-sm text-[#3D52A0]"
@@ -92,32 +84,32 @@ const CastSection = () => {
                         {actor.name}
                       </Typography>
                       <Typography variant="small" className="text-[#7091E6]">
-                        {actor.roles?.[0]?.character || "Unknown Character"}
+                        {actor.character || "Unknown Character"}
                       </Typography>
                       <Typography variant="small" className="text-[#3D52A0]/80">
-                        {actor.total_episode_count || 0} Episodes
+                        popularity {actor.popularity || "0"}
                       </Typography>
                     </div>
                   </Link>
                 </motion.div>
               ))}
-              <div className="flex-shrink-0 w-[160px] flex items-center justify-center">
-                {cast?.length > 0 && (
+              {cast?.length > 0 && (
+                <div className="flex-shrink-0 w-[160px] flex items-center justify-center">
                   <Link
-                    to={`/series/${id}/FullCastPage`}
+                    to={`/movie/${id}/FullCastMovie`}
                     className="text-[#3D52A0] hover:text-[#7091E6] font-medium text-center w-full"
                   >
                     View More
                   </Link>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
           <div className="mt-4">
             {cast?.length > 0 && (
               <Link
-                to={`/series/${id}/FullCastPage`}
+                to={`/movie/${id}/FullCastMovie`}
                 className="text-[#3D52A0] hover:text-[#7091E6] font-medium"
               >
                 Full Cast & Crew

@@ -69,7 +69,7 @@ const MoviesSection = () => {
               key={movie.id}
               className="px-5 cursor-pointer transition-transform duration-300 hover:scale-105"
             >
-              <Link to={`/movies/${movie.id}`}>
+              <Link to={`/movie/${movie.id}`}>
                 {movie.poster_path ? (
                   <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

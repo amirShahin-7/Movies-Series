@@ -91,7 +91,7 @@ const Header = () => {
               </div>
 
               <ul className="flex flex-col gap-5 mb-6 ">
-                {["/", "/movies", "/series", "/contactUs"].map((path) => (
+                {["/", "/movie", "/series", "/contactUs"].map((path) => (
                   <li key={path}>
                     <Link
                       to={path}
@@ -124,7 +124,7 @@ const Header = () => {
       </AnimatePresence>
 
       <nav className="hidden lg:flex gap-8 text-sm font-medium tracking-wide">
-        {["/", "/movies", "/series", "/contactUs"].map((path) => (
+        {["/", "/movie", "/series", "/contactUs"].map((path) => (
           <Link
             key={path}
             to={path}

@@ -2,22 +2,21 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Typography, Card, CardBody } from "@material-tailwind/react";
-import { fetchVideos } from "../../../../redux/slices/series/mediaSlice/mediaSlice";
-import { fetchSeriesDetails } from "../../../../redux/slices/series/seriesDetailsSlice";
+import { fetchVideos } from "../../../../redux/slices/moviesSlices/mediaSlice/mediaSlice";
+import { moviesDetails } from "../../../../redux/slices/moviesSlices/movieDetailsSlice";
+
 
 const VideosPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { details } = useSelector((state) => state.seriesDetailsReducer);
-  const { videos, isLoading, error } = useSelector(
-    (state) => state.mediaReducer
-  );
+  const { details } = useSelector((state) => state.movieDetails);
+  const { videos, isLoading, error } = useSelector((state) => state.mediaMovie);
   const [filter, setFilter] = useState("Trailer");
   const [playingVideo, setPlayingVideo] = useState(null);
 
   useEffect(() => {
     dispatch(fetchVideos(id));
-    dispatch(fetchSeriesDetails(id));
+    dispatch(moviesDetails(id));
   }, [id, dispatch]);
 
   if (isLoading) {
@@ -81,15 +80,15 @@ const VideosPage = () => {
                 ? `https://image.tmdb.org/t/p/w185${details?.poster_path}`
                 : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"
             }
-            alt={details?.name}
+            alt={details?.title}
             loading="lazy"
             className="w-24 h-auto rounded shadow"
           />
           <div>
             <div className="text-2xl font-bold text-[#3D52A0]">
-              {details?.name || "__"}
+              {details?.title || "--"}
             </div>
-            <Link to={`/series/${id}`}>
+            <Link to={`/movie/${id}`}>
               <div className="text-[#7091E6] underline hover:text-[#3D52A0]">
                 ← Back to main
               </div>
