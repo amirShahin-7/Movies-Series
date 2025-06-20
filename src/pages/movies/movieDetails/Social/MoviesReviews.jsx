@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
-import { fetchMovieReviews } from "../../../../redux/slices/moviesSlices/Social/SocialReviewsSlice";
+import { fetchMovieReviews } from "./../../../../redux/slices/moviesSlices/Social/SocialReviewsSlice";
 
 const MoviesReviews = () => {
   const { id } = useParams();
