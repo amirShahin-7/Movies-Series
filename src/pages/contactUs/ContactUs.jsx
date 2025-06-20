@@ -42,7 +42,7 @@ const ContactUs = () => {
     emailjs
       .send(
         "service_hkjv4x4",
-        "template_ulns2er",
+        "template_830qu2j",
         formData,
         "um9OMcpSbUIX0lfIP"
       )
