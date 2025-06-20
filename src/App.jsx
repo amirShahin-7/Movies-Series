@@ -20,11 +20,11 @@ import PostersPage from "./pages/series/seriesDetails/formedia/PostersPage";
 import NotFound from "./pages/notFound/NotFound";
 import MoviesDetails from "./pages/movies/movieDetails/MoviesDetails";
 import FullCastMovie from "./pages/movies/movieDetails/cast/FullCastMovie";
-import MoviesReviews from "./pages/movies/movieDetails/Social/moviesReviews";
 import VideosMoviePage from "./pages/movies/movieDetails/formedia/VideosMoviePage";
 import BackdropsMoviePage from "./pages/movies/movieDetails/formedia/BackdropsMoviePage";
 import PostersMoviePage from "./pages/movies/movieDetails/formedia/PostersMoviePage";
 import CollectionDetails from "./pages/movies/movieDetails/collection/CollectionDetails";
+import MoviesReviews from './pages/movies/movieDetails/Social/MoviesReviews';
 
 const App = () => {
   return (
@@ -56,10 +56,10 @@ const App = () => {
           element={<KeywordPage />}
         />
         <Route path="/series/:id/reviews" element={<AllReviews />} />
-        <Route path="/movie/:id/reviews" element={<MoviesReviews />} />
         <Route path="/series/:id/videos" element={<VideosPage />} />
         <Route path="/series/:id/backdrops" element={<BackdropsPage />} />
         <Route path="/series/:id/posters" element={<PostersPage />} />
+        <Route path="/movie/:id/reviews" element={<MoviesReviews />} />
         <Route path="/movie/:id/videos" element={<VideosMoviePage />} />
         <Route path="/movie/:id/backdrops" element={<BackdropsMoviePage />} />
         <Route path="/movie/:id/posters" element={<PostersMoviePage />} />
